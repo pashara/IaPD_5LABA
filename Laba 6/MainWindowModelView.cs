@@ -14,8 +14,16 @@ namespace Laba_6
     {
         #region Fields
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private string _programTitle = "Device manager";
         public string H1Title => "Devices Manager";
+
+        DeviceManager manager = new DeviceManager();
+
+        ObservableCollection<Device> _deviceList = new ObservableCollection<Device>();
+
+        Device _selectedDevice = new Device();
 
         #endregion
 
@@ -43,22 +51,11 @@ namespace Laba_6
             }
         }
 
-        #endregion
-
-
-
-
-        DeviceManager manager = new DeviceManager();
-        ObservableCollection<Device> _deviceList = new ObservableCollection<Device>();
-
-        
-
-        Device _selectedDevice = new Device();
         public int SelectedDeviceIndex
         {
             get;
             set;
-        } 
+        }
         public Device SelectedDevice
         {
             get
@@ -71,6 +68,23 @@ namespace Laba_6
                 OnPropertyChanged(nameof(SelectedDevice));
             }
         }
+        #endregion
+        
+
+        #region Public methods
+
+        public MainWindowModelView()
+        {
+            MainWindow.OnSelectedDevice += MainWindow_OnSelectedDevice;
+            MainWindow.OnMouseDeviceDoubleClick += MainWindow_OnMouseDeviceDoubleClick;
+
+            UpdateInfoInAnotherThread();
+        }
+
+        #endregion
+
+
+        #region Private methods
 
         private void UpdateInfoInAnotherThread()
         {
@@ -83,32 +97,22 @@ namespace Laba_6
             }).Start();
         }
 
-        public MainWindowModelView()
-        {
-            MainWindow.OnSelectedDevice += MainWindow_OnSelectedDevice;
-            MainWindow.OnMouseDeviceDoubleClick += MainWindow_OnMouseDeviceDoubleClick;
-
-
-            UpdateInfoInAnotherThread();
-        }
-
         private void MainWindow_OnSelectedDevice(Device device)
         {
             SelectedDevice = device;
         }
-
         private void MainWindow_OnMouseDeviceDoubleClick(Device device)
         {
             if (device.IsEnable)
             {
                 if (!device.Disconnect())
                 {
-                    MessageBox.Show( "Не могу отключить устройство", "Ошибка",
+                    MessageBox.Show("Не могу отключить устройство", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    MessageBox.Show("Устройство отключено","Информация",
+                    MessageBox.Show("Устройство отключено", "Информация",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateInfoInAnotherThread();
                 }
@@ -123,20 +127,18 @@ namespace Laba_6
                 }
                 else
                 {
-                    MessageBox.Show( "Устройство включено", "Информация",
+                    MessageBox.Show("Устройство включено", "Информация",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateInfoInAnotherThread();
                 }
             }
-
         }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }
