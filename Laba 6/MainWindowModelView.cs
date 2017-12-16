@@ -12,10 +12,16 @@ namespace Laba_6
 {
     public class MainWindowModelView : INotifyPropertyChanged
     {
-
+        #region Fields
 
         private string _programTitle = "Device manager";
         public string H1Title => "Devices Manager";
+
+        #endregion
+
+
+        #region Properties
+
         public string ProgramTitle
         {
             get
@@ -29,18 +35,23 @@ namespace Laba_6
             }
         }
 
-
-
-        DeviceManager manager = new DeviceManager();
-        ObservableCollection<Device> _deviceList = new ObservableCollection<Device>();
         public ObservableCollection<Device> DevicesList
         {
             get
             {
                 return _deviceList;
-                //return manager.Devices;
             }
         }
+
+        #endregion
+
+
+
+
+        DeviceManager manager = new DeviceManager();
+        ObservableCollection<Device> _deviceList = new ObservableCollection<Device>();
+
+        
 
         Device _selectedDevice = new Device();
         public int SelectedDeviceIndex
@@ -97,7 +108,7 @@ namespace Laba_6
                 }
                 else
                 {
-                    MessageBox.Show("Устройсвто отключено","Информация",
+                    MessageBox.Show("Устройство отключено","Информация",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateInfoInAnotherThread();
                 }
@@ -112,7 +123,7 @@ namespace Laba_6
                 }
                 else
                 {
-                    MessageBox.Show( "Устройсвто включено", "Информация",
+                    MessageBox.Show( "Устройство включено", "Информация",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                     UpdateInfoInAnotherThread();
                 }

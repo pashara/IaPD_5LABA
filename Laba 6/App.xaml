@@ -5,8 +5,5 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--<vms:MainWindowModelView x:Key="MainWindowWm" />-->
-        
-        <local:EnabelImageConverter TrueImage="{StaticResource Image}" FalseImage="{StaticResource FalseImage}" x:Key="BoolImageConverter"/>
-
     </Application.Resources>
 </Application>

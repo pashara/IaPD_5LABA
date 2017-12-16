@@ -18,7 +18,9 @@ namespace Laba_6
                 var oc = new ObservableCollection<Device>();
 
                 foreach (var item in a)
+                {
                     oc.Add(item);
+                }
 
                 return oc;
             }
@@ -30,27 +32,28 @@ namespace Laba_6
             var searcher = new ManagementObjectSearcher(new ManagementScope(), serialQuery);
 
             var devices = searcher.Get();
-            var devs = new List<Device>();
+            var devicesList = new List<Device>();
 
-            foreach (var o in devices)
+            foreach (var fDevice in devices)
             {
-                if (o["PNPClass"] == null)
+                if (fDevice["PNPClass"] == null)
                 {
                     continue;
                 }
-                var device = (ManagementObject)o;
+                ManagementObject device = (ManagementObject)fDevice;
+
                 var driver = device.GetRelated("Win32_SystemDriver");
 
 
                 if (driver.Count != 0)
                 {
-                    devs.Add(new Device(device, driver.OfType<ManagementObject>().FirstOrDefault()));
+                    devicesList.Add(new Device(device, driver.OfType<ManagementObject>().FirstOrDefault()));
                     continue;
                 }
-                devs.Add(new Device(device, null));
+                devicesList.Add(new Device(device, null));
             }
 
-            return devs;
+            return devicesList;
         }
 
 

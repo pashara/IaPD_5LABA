@@ -10,44 +10,39 @@ namespace Laba_6
     public class Device
     {
 
+        #region Fields
+
         private ManagementObject _device;
         private ManagementObject _driver;
 
+        #endregion
+
+
+        #region Properties
 
         public string DeviceID
         {
             get
             {
-                return asdasd(_device["DeviceID"]);
+                return Object2String(_device["DeviceID"]);
             }
         }
+
         public string Title
         {
             get
             {
-                return asdasd(_device["Name"]);
+                return Object2String(_device["Name"]);
             }
         }
-
-        private string asdasd(object a)
-        {
-            if (a != null)
-            {
-                return a.ToString();
-            }
-            return "";
-        }
-
 
         public string GuID
         {
             get
             {
-                return asdasd(_device["ClassGuid"]);
+                return Object2String(_device["ClassGuid"]);
             }
         }
-
-
 
         public string Hardware
         {
@@ -71,7 +66,7 @@ namespace Laba_6
         {
             get
             {
-                return asdasd(_device["Manufacturer"]);
+                return Object2String(_device["Manufacturer"]);
             }
         }
 
@@ -82,7 +77,7 @@ namespace Laba_6
                 if (_driver != null)
                 {
 
-                    return asdasd(_driver["Description"]);
+                    return Object2String(_driver["Description"]);
                 }
                 return "";
             }
@@ -93,7 +88,7 @@ namespace Laba_6
             {
                 if (_driver != null)
                 {
-                    return asdasd(_driver["PathName"]);
+                    return Object2String(_driver["PathName"]);
                 }
                 return "";
             }
@@ -108,7 +103,10 @@ namespace Laba_6
             }
         }
 
+        #endregion
 
+
+        #region Cns
 
         public Device(ManagementObject device, ManagementObject driver)
         {
@@ -119,6 +117,11 @@ namespace Laba_6
         public Device()
         {
         }
+
+        #endregion
+
+
+        #region Public methods
 
         public bool Disconnect()
         {
@@ -154,5 +157,16 @@ namespace Laba_6
             return true;
         }
 
+        #endregion
+
+
+        #region Private methods
+
+        private string Object2String(object a)
+        {
+            return (a != null) ? a.ToString() : " ";
+        }
+
+        #endregion
     }
 }

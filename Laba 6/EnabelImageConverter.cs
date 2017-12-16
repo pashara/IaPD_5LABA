@@ -8,6 +8,7 @@ using System.Windows.Data;
 
 namespace Laba_6
 {
+    /*
     class EnabelImageConverter : IValueConverter
     {
         public Image TrueImage { get; set; }
@@ -36,4 +37,5 @@ namespace Laba_6
             throw new NotImplementedException();
         }
     }
+    */
 }
